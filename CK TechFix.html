@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CK TechFix - Phone & Computer Repairs | Ngombe & Lusaka</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary: #2a5bd7;
+            --primary-dark: #1a4bc2;
+            --secondary: #10b981;
+            --secondary-dark: #0da271;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader {
+            width: 70px;
+            height: 70px;
+            position: relative;
+        }
+
+        .loader:before, .loader:after {
+            content: '';
+            border-radius: 50%;
+            position: absolute;
+            inset: 0;
+            box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.3) inset;
+        }
+
+        .loader:after {
+            box-shadow: 0 2px 0 var(--primary) inset;
+            animation: rotate 1s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0) }
+            100% { transform: rotate(360deg) }
+        }
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        #back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #back-to-top:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            left: 0;
+            bottom: -5px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 10rem;
+            padding-bottom: 5rem;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero-text {
+            flex: 1;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            animation: fadeInRight 1s ease-out;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--gray);
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Features Section */
+        .features {
+            background-color: white;
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            transition: var(--transition);
+            background-color: var(--light);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(42, 91, 215, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        /* Services Section */
+        .services {
+            background-color: #f8fafc;
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .service-header {
+            padding: 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .service-header i {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+
+        .service-body {
+            padding: 1.5rem;
+        }
+
+        .service-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+        }
+
+        .service-list li i {
+            color: var(--secondary);
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* About Section */
+        .about {
+            background-color: white;
+        }
+
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .about-image {
+            flex: 1;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        .mission-vision {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .mission, .vision {
+            flex: 1;
+            padding: 1.5rem;
+            background-color: #f0f7ff;
+            border-radius: 10px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: #f8fafc;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(42, 91, 215, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .contact-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 91, 215, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-about p {
+            color: #cbd5e1;
+        }
+
+        .footer-links h3, .footer-contact h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3:after, .footer-contact h3:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .footer-contact p {
+            color: #cbd5e1;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25d366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            text-decoration: none;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128c7e;
+            transform: scale(1.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text, .hero-image {
+                width: 100%;
+            }
+            
+            .hero-image {
+                margin-top: 3rem;
+            }
+            
+            .about-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-links li {
+                margin: 0 0 1.5rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .mission-vision {
+                flex-direction: column;
+            }
+            
+            .whatsapp-float {
+                bottom: 90px;
+                left: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            .hero {
+                padding-top: 8rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div id="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/260XXXXXXXXX" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-tools"></i>
+                CK TechFix
+            </a>
+            
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#booking" class="btn btn-primary">Book Repair</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Fast. Reliable. Professional Phone & Computer Repairs</h1>
+                <p>Serving Ngombe & Lusaka with trusted tech repair solutions</p>
+                <div class="hero-buttons">
+                    <a href="#booking" class="btn btn-primary">
+                        <i class="fas fa-calendar-check"></i> Book a Repair
+                    </a>
+                    <a href="https://wa.me/260XXXXXXXXX" class="btn btn-secondary" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Us Now
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Phone Repair">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Why Choose CK TechFix</h2>
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Fast Repairs</h3>
+                    <p>Most repairs completed within 24 hours. Same-day service available for common issues.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Expert Technicians</h3>
+                    <p>Our certified technicians have years of experience repairing all major brands and models.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <h3>Affordable Pricing</h3>
+                    <p>Transparent pricing with no hidden fees. Quality repairs that won't break the bank.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Data Safety Guarantee</h3>
+                    <p>We prioritize your data security. 100% confidentiality and data protection guarantee.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="services-container">
+                <div class="service-card">
+                    <div class="service-header">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile Phone Repairs</h3>
+                    </div>
+                    <div class="service-body">
+                        <ul class="service-list">
+                            <li><i class="fas fa-check"></i> Screen Replacement</li>
+                            <li><i class="fas fa-check"></i> Battery Issues</li>
+                            <li><i class="fas fa-check"></i> Charging Port</li>
+                            <li><i class="fas fa-check"></i> Water Damage</li>
+                            <li><i class="fas fa-check"></i> Software & Unlocking</li>
+                        </ul>
+                        <a href="#booking" class="btn btn-primary btn-block">Book Service</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-header">
+                        <i class="fas fa-laptop"></i>
+                        <h3>Computer & Laptop Repairs</h3>
+                    </div>
+                    <div class="service-body">
+                        <ul class="service-list">
+                            <li><i class="fas fa-check"></i> OS Installation</li>
+                            <li><i class="fas fa-check"></i> Virus Removal</li>
+                            <li><i class="fas fa-check"></i> Hardware Repair</li>
+                            <li><i class="fas fa-check"></i> Data Recovery</li>
+                            <li><i class="fas fa-check"></i> Performance Upgrade</li>
+                        </ul>
+                        <a href="#booking" class="btn btn-primary btn-block">Book Service</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-header">
+                        <i class="fas fa-headphones-alt"></i>
+                        <h3>Accessories Shop</h3>
+                    </div>
+                    <div class="service-body">
+                        <ul class="service-list">
+                            <li><i class="fas fa-check"></i> Chargers & Cables</li>
+                            <li><i class="fas fa-check"></i> Earphones & Headsets</li>
+                            <li><i class="fas fa-check"></i> Power Banks</li>
+                            <li><i class="fas fa-check"></i> Screen Protectors</li>
+                            <li><i class="fas fa-check"></i> Phone Cases</li>
+                        </ul>
+                        <a href="https://wa.me/260XXXXXXXXX" class="btn btn-secondary btn-block" target="_blank">Order Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>About CK TechFix</h2>
+            <div class="about-container">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="About CK TechFix">
+                </div>
+                <div class="about-content">
+                    <h3>Who We Are</h3>
+                    <p>CK TechFix is a community-based repair service founded by a young Zambian tech entrepreneur with a passion for solving technology problems. We started with a small workshop in Ngombe and have grown to serve all of Lusaka with honest, skilled, and affordable tech repair services.</p>
+                    
+                    <div class="mission-vision">
+                        <div class="mission">
+                            <h4><i class="fas fa-bullseye"></i> Our Mission</h4>
+                            <p>To provide fast, reliable, and affordable tech repair services while building lasting relationships with our customers through transparency and exceptional service.</p>
+                        </div>
+                        <div class="vision">
+                            <h4><i class="fas fa-eye"></i> Our Vision</h4>
+                            <p>To become the most trusted tech repair service in Zambia, known for quality workmanship, customer education, and community involvement.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h4>Why Choose CK TechFix</h4>
+                        <ul class="service-list">
+                            <li><i class="fas fa-check-circle" style="color: var(--secondary);"></i> Free Diagnosis for All Devices</li>
+                            <li><i class="fas fa-check-circle" style="color: var(--secondary);"></i> Transparent Pricing with No Hidden Fees</li>
+                            <li><i class="fas fa-check-circle" style="color: var(--secondary);"></i> Quality Original & Aftermarket Parts</li>
+                            <li><i class="fas fa-check-circle" style="color: var(--secondary);"></i> 90-Day Warranty on All Repairs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Booking Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 id="booking">Book a Repair</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Our Location</h4>
+                            <p>Ngombe, Lusaka, Zambia</p>
+                            <p><small>Same-day repair available for local customers</small></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Call Us</h4>
+                            <p>+260 XXX XXX XXX</p>
+                            <p>Mon-Sat: 8:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email Us</h4>
+                            <p>info@cktechfix.co.zm</p>
+                            <p>We respond within 2 hours</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4>Working Hours</h4>
+                            <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
+                            <p>Saturday: 9:00 AM - 4:00 PM</p>
+                            <p>Sunday: Emergency Repairs Only</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1rem;">
+                        <h4>Student Discount</h4>
+                        <p>We offer 15% discount for all students with valid ID. Bring your student card when you visit our shop!</p>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Book Your Repair Now</h3>
+                    <p>Fill out the form below and we'll contact you within 30 minutes to confirm your booking.</p>
+                    
+                    <form id="booking-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="Your Phone Number" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="device">Device Type</label>
+                            <select id="device" class="form-control" required>
+                                <option value="">Select Device</option>
+                                <option value="iphone">iPhone</option>
+                                <option value="samsung">Samsung Phone</option>
+                                <option value="other-phone">Other Phone</option>
+                                <option value="laptop">Laptop</option>
+                                <option value="desktop">Desktop Computer</option>
+                                <option value="other">Other Device</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="issue">Describe the Issue</label>
+                            <textarea id="issue" class="form-control" placeholder="Please describe what's wrong with your device..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-paper-plane"></i> Submit Booking Request
+                        </button>
+                        
+                        <p style="margin-top: 1rem; font-size: 0.9rem; text-align: center;">
+                            Or <a href="https://wa.me/260XXXXXXXXX" style="color: var(--primary); font-weight: 600;">click here to WhatsApp us directly</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+  <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <a href="#" class="footer-logo">
+                        <i class="fas fa-tools"></i> CK TechFix
+                    </a>
+                    <p>Your trusted partner for phone and computer repairs in Ngombe and Lusaka. Fast, reliable, and professional service with a community focus.</p>
+                    
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/260XXXXXXXXX" class="social-icon" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#booking">Book Repair</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Ngombe, Lusaka, Zambia</p>
+                    <p><i class="fas fa-phone-alt"></i> +260 XXX XXX XXX</p>
+                    <p><i class="fas fa-envelope"></i> info@cktechfix.co.zm</p>
+                    <p><i class="fas fa-clock"></i> Mon-Sat: 8AM - 6PM</p>
+                    <p><i class="fas fa-star"></i> Student Discount: 15% off</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 CK TechFix. All Rights Reserved. | Designed with <i class="fas fa-heart" style="color: #ff4757;"></i> for Lusaka</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Back to Top Button
+        const backToTop = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.pageYOffset > 100) {
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+                header.style.padding = '0.5rem 0';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                header.style.padding = '1rem 0';
+            }
+        });
+
+        // Booking Form Submission
+        const bookingForm = document.getElementById('booking-form');
+        
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const device = document.getElementById('device').value;
+            const issue = document.getElementById('issue').value;
+            
+            // Create WhatsApp message
+            const message = `Hello CK TechFix!%0A%0AI would like to book a repair:%0A%0AName: ${name}%0APhone: ${phone}%0ADevice: ${device}%0AIssue: ${issue}%0A%0APlease contact me to confirm the booking.`;
+            
+            // Redirect to WhatsApp
+            window.open(`https://wa.me/260XXXXXXXXX?text=${message}`, '_blank');
+            
+            // Reset form
+            bookingForm.reset();
+            
+            // Show confirmation (in a real implementation)
+            alert('Thank you! You will now be redirected to WhatsApp to complete your booking.');
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.feature-card, .service-card, .about-image, .about-content').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+  </html>
